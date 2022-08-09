@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.damon.springBoot.dao.ZhUserResourceMapper">
+  <resultMap id="BaseResultMap" type="ZhUserResource">
+    <result column="USER_ID_" jdbcType="VARCHAR" property="userId" />
+    <result column="RESOURCE_ID_" jdbcType="VARCHAR" property="resourceId" />
+    <result column="ROLE_TYPE_" jdbcType="INTEGER" property="roleType" />
+  </resultMap>
+  <insert id="insertUserResource" parameterType="ZhUserResource">
+    insert into zh_user_resource (USER_ID_, RESOURCE_ID_, ROLE_TYPE_
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR}, #{roleType,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ZhUserResource">
+    insert into zh_user_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        USER_ID_,
+      </if>
+      <if test="resourceId != null">
+        RESOURCE_ID_,
+      </if>
+      <if test="roleType != null">
+        ROLE_TYPE_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null">
+        #{roleType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <sql id="columns">
+    user_id_, resource_id_, role_type_
+  </sql>
+
+  <!--全查询-->
+  <select id="selectAllUserResource" resultMap="BaseResultMap">
+    select <include refid="columns"/>
+    from zh_user_resource
+  </select>
+
+  <select id="selectUserResourceById" resultMap="BaseResultMap">
+    <!--根据id查询Resource-->
+    select <include refid="columns"/>
+    from zh_user_resource where user_id_ = #{id}
+  </select>
+
+  <!--关联查询-->
+  <select id="selectResourceByUserId" resultMap="ResourceMap">
+    <!--根据User id查询Resource-->
+    select
+        zr.*
+    from zh_user_resource as zur
+    left join zh_resource as zr
+    on zur.resource_id_ = zr.id_
+    where user_id_ = #{id}
+  </select>
+
+  <delete id="deleteUserResourceById" parameterType="string">
+    <!--根据id删除员工-->
+    delete from zh_user_resource
+    where user_id_ = #{id}
+  </delete>
+
+  <update id="updateUserResourceById" parameterType="ZhResource">
+    <!--更新员工信息-->
+    update zh_user_resource
+    <set>
+      <if test="userId != null">
+        USER_ID_ = #{userId},
+      </if>
+      <if test="resourceId != null">
+        RESOURCE_ID_ = #{resourceId},
+      </if>
+      <if test="roleType != null">
+        ROLE_TYPE_ = #{roleType},
+      </if>
+    </set>
+    where user_id_ = #{userId}
+  </update>
+  <resultMap id="ResourceMap" type="ZhResource">
+    <result column="TYPE_" jdbcType="INTEGER" property="type" />
+    <result column="ID_" jdbcType="VARCHAR" property="id" />
+    <result column="NAME_" jdbcType="VARCHAR" property="name" />
+    <result column="MENU_PATH_" jdbcType="VARCHAR" property="menuPath" />
+    <result column="SERVICE_PATH_" jdbcType="VARCHAR" property="servicePath" />
+    <result column="DATA_PATH_" jdbcType="VARCHAR" property="dataPath" />
+    <result column="DATA_TYPE_" jdbcType="INTEGER" property="dataType" />
+    <result column="TABLE_" jdbcType="VARCHAR" property="table" />
+    <result column="COLUMN_" jdbcType="VARCHAR" property="column" />
+    <result column="PROTO_" jdbcType="VARCHAR" property="proto" />
+    <result column="IP_" jdbcType="VARCHAR" property="ip" />
+    <result column="PORT_" jdbcType="VARCHAR" property="port" />
+    <result column="APP_PRO_" jdbcType="VARCHAR" property="appPro" />
+    <result column="AUTH_" jdbcType="VARCHAR" property="auth" />
+    <result column="EDIT_TIME_" jdbcType="VARCHAR" property="editTime" />
+  </resultMap>
+</mapper>

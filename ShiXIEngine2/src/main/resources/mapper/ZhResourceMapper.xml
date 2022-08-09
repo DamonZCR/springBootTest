@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.damon.springBoot.dao.ZhResourceMapper">
+  <resultMap id="BaseResultMap" type="ZhResource">
+    <result column="TYPE_" jdbcType="INTEGER" property="type" />
+    <result column="ID_" jdbcType="VARCHAR" property="id" />
+    <result column="NAME_" jdbcType="VARCHAR" property="name" />
+    <result column="MENU_PATH_" jdbcType="VARCHAR" property="menuPath" />
+    <result column="SERVICE_PATH_" jdbcType="VARCHAR" property="servicePath" />
+    <result column="DATA_PATH_" jdbcType="VARCHAR" property="dataPath" />
+    <result column="DATA_TYPE_" jdbcType="INTEGER" property="dataType" />
+    <result column="TABLE_" jdbcType="VARCHAR" property="table" />
+    <result column="COLUMN_" jdbcType="VARCHAR" property="column" />
+    <result column="PROTO_" jdbcType="VARCHAR" property="proto" />
+    <result column="IP_" jdbcType="VARCHAR" property="ip" />
+    <result column="PORT_" jdbcType="VARCHAR" property="port" />
+    <result column="APP_PRO_" jdbcType="VARCHAR" property="appPro" />
+    <result column="AUTH_" jdbcType="VARCHAR" property="auth" />
+    <result column="EDIT_TIME_" jdbcType="VARCHAR" property="editTime" />
+  </resultMap>
+  <insert id="insert" parameterType="ZhResource">
+    insert into zh_resource (TYPE_, ID_, NAME_, 
+      MENU_PATH_, SERVICE_PATH_, DATA_PATH_, 
+      DATA_TYPE_, TABLE_, COLUMN_, 
+      PROTO_, IP_, PORT_, APP_PRO_, 
+      AUTH_, EDIT_TIME_)
+    values (#{type,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{menuPath,jdbcType=VARCHAR}, #{servicePath,jdbcType=VARCHAR}, #{dataPath,jdbcType=VARCHAR}, 
+      #{dataType,jdbcType=INTEGER}, #{table,jdbcType=VARCHAR}, #{column,jdbcType=VARCHAR}, 
+      #{proto,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR}, #{appPro,jdbcType=VARCHAR}, 
+      #{auth,jdbcType=VARCHAR}, #{editTime,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="ZhResource">
+    insert into zh_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        TYPE_,
+      </if>
+      <if test="id != null">
+        ID_,
+      </if>
+      <if test="name != null">
+        NAME_,
+      </if>
+      <if test="menuPath != null">
+        MENU_PATH_,
+      </if>
+      <if test="servicePath != null">
+        SERVICE_PATH_,
+      </if>
+      <if test="dataPath != null">
+        DATA_PATH_,
+      </if>
+      <if test="dataType != null">
+        DATA_TYPE_,
+      </if>
+      <if test="table != null">
+        TABLE_,
+      </if>
+      <if test="column != null">
+        COLUMN_,
+      </if>
+      <if test="proto != null">
+        PROTO_,
+      </if>
+      <if test="ip != null">
+        IP_,
+      </if>
+      <if test="port != null">
+        PORT_,
+      </if>
+      <if test="appPro != null">
+        APP_PRO_,
+      </if>
+      <if test="auth != null">
+        AUTH_,
+      </if>
+      <if test="editTime != null">
+        EDIT_TIME_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="menuPath != null">
+        #{menuPath,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePath != null">
+        #{servicePath,jdbcType=VARCHAR},
+      </if>
+      <if test="dataPath != null">
+        #{dataPath,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null">
+        #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="table != null">
+        #{table,jdbcType=VARCHAR},
+      </if>
+      <if test="column != null">
+        #{column,jdbcType=VARCHAR},
+      </if>
+      <if test="proto != null">
+        #{proto,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        #{port,jdbcType=VARCHAR},
+      </if>
+      <if test="appPro != null">
+        #{appPro,jdbcType=VARCHAR},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <sql id="columns">
+    type_, id_, NAME_, menu_path_, service_path_, data_path_, data_type_, table_, column_, proto_, ip_, port_, app_pro_, auth_, edit_time_
+  </sql>
+
+  <!--全查询-->
+  <select id="selectAllResource" resultMap="BaseResultMap">
+    select <include refid="columns"/>
+    from zh_resource
+  </select>
+
+  <select id="selectAllResourceById" resultMap="BaseResultMap">
+    <!--根据id查询Resource-->
+    select <include refid="columns"/>
+    from zh_resource where id_ = #{id}
+  </select>
+
+  <delete id="deleteById" parameterType="string">
+    <!--根据id删除员工-->
+    delete from zh_resource
+    where id_ = #{id}
+  </delete>
+
+  <update id="updateById" parameterType="ZhResource">
+    <!--更新员工信息-->
+    update zh_resource
+    <set>
+      <if test="type != null">
+        TYPE_ = #{type},
+      </if>
+      <if test="id != null">
+        ID_ = #{id},
+      </if>
+      <if test="name != null">
+        NAME_ = #{name},
+      </if>
+      <if test="menuPath != null">
+        MENU_PATH_ = #{menuPath},
+      </if>
+      <if test="servicePath != null">
+        SERVICE_PATH_ = #{servicePath},
+      </if>
+      <if test="dataPath != null">
+        DATA_PATH_ = #{dataPath},
+      </if>
+      <if test="dataType != null">
+        DATA_TYPE_ = #{dataType},
+      </if>
+      <if test="table != null">
+        TABLE_ = #{table},
+      </if>
+      <if test="column != null">
+        COLUMN_ = #{column},
+      </if>
+      <if test="proto != null">
+        PROTO_ = #{proto},
+      </if>
+      <if test="ip != null">
+        IP_ = #{ip},
+      </if>
+      <if test="port != null">
+        PORT_ = #{port},
+      </if>
+      <if test="appPro != null">
+        APP_PRO_ = #{appPro},
+      </if>
+      <if test="auth != null">
+        AUTH_ = #{auth},
+      </if>
+      <if test="editTime != null">
+        EDIT_TIME_ = #{editTime}
+      </if>
+    </set>
+    where id_ = #{id}
+  </update>
+</mapper>
