@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.damon.springboot.pojo.Employee">
+    <resultMap id="employeeResultMap" type="com.damon.springboot.pojo.Employee">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="birthday" column="birthday"/>
+        <result property="salary" column="salary"/>
+    </resultMap>
+
+    <select id="selectAllEmployee" resultMap="employeeResultMap">
+        /*查询全部*/
+        select id,name,age,birthday,salary from t_employee
+    </select>
+
+    <select id="selectEmployeeById" resultMap="employeeResultMap">
+        /* 根据id查询Employee*/
+        select id,name,age,birthday,salary from t_employee where id = #{id}
+    </select>
+
+    <insert id="insertEmployee" parameterType="com.damon.springboot.pojo.Employee">
+        /*添加员工*/
+        insert into t_employee values(null,#{name},#{age},#{birthday},#{salary})
+    </insert>
+
+    <delete id="deleteEmployee" parameterType="int">
+        /*根据id删除员工*/
+        delete from t_employee where id = #{id}
+    </delete>
+
+    <update id="updateEmployee" parameterType="com.damon.springboot.pojo.Employee">
+        /*更新员工信息*/
+        update t_employee set name = #{name},age=#{age},birthday=#{birthday},salary=#{salary} where id=#{id}
+    </update>
+
+</mapper>
